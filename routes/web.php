@@ -29,4 +29,8 @@ Route::get('/', 'PagesController@index');
 Route::get('/about', 'PagesController@about');
 Route::get('/services', 'PagesController@services');
 
+// Route::group(['middleware' => ['web']], function () {
+//     Route::resource('posts', 'PostsController');
+// });
+
 Route::resource('posts', 'PostsController');
