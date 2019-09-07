@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <h3>Posts</h3>
+    <h3 class="py-3">Welcome to Linh Nguyen Blog</h3>
     @if (count($posts) > 0)
         @foreach ($posts as $post)
             <div class="card card-body bg-light mb-3">
