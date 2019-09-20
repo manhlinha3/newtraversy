@@ -26,6 +26,7 @@
             @include('inc.messages')
             @yield('content')
         </div>
+        @include('inc.footer')
     </div>
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>

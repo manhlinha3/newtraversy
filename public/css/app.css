@@ -10644,3 +10644,23 @@ a.text-dark:focus {
   }
 }
 
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.sidebar-header {
+  font-size: 1.5rem;
+}
+
+footer {
+  color: white;
+}
+
+footer .footer-copyright {
+  background-color: aquamarine;
+}
+
