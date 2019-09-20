@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddPostsUrlToPostsTable extends Migration
+class AddDescriptionsToPostsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddPostsUrlToPostsTable extends Migration
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->string('url');
+            $table->mediumText('description');
         });
     }
 
@@ -26,7 +26,7 @@ class AddPostsUrlToPostsTable extends Migration
     public function down()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->dropColumn('url');
+            Schema::dropIfExists('description');
         });
     }
 }

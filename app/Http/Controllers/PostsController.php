@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Post;
 use DB;
+use Cocur\Slugify\Slugify;
+use App\Http\Requests\CreatePostRequest;
 // use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 class PostsController extends Controller
@@ -51,14 +53,14 @@ class PostsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreatePostRequest $request)
     {
-        $this->validate($request, [
-            'title' => 'required',
-            'body' => 'required',
-            'cover_image' => 'image|nullable|max:1999'
-        ]);
-
+        // $this->validate($request, [
+        //     'title' => 'required',
+        //     'body' => 'required',
+        //     'cover_image' => 'image|nullable|max:1999'
+        // ]);
+            $request->validated();
         // Handle file upload
         if ($request->hasFile('cover_image')) {
             // Get filename with the extension
@@ -78,11 +80,24 @@ class PostsController extends Controller
 
         // return 123;
         // Create post
+
+        // generate url from post title
+        $slugify = new Slugify();
+        $slug = $slugify->slugify($request->input('title'));
+
         $post = new Post;
+        // $url = $slug.$post->id;
+        // var_dump($url);
+        // die();
         $post->title = $request->input('title');
+        $post->url = $slug;
+        $post->description = $request->input('description');
         $post->body = $request->input('body');
         $post->user_id = auth()->user()->id;
         $post->cover_image = $filenameToStore;
+        $post->save();
+
+        $post->url = $slug.'-'.$post->id;
         $post->save();
 
         // Redirect
@@ -96,10 +111,12 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($url)
     {
-        $post = Post::find($id);
+        // $post = Post::find($id);
+        $post = Post::where('url', $url)->first();
         return view('posts.show')->with('post', $post);
+        // var_dump($post);
     }
 
     /**
@@ -131,6 +148,7 @@ class PostsController extends Controller
     {
         $this->validate($request, [
             'title' => 'required',
+            'description' => 'required|max:400',
             'body' => 'required'
         ]);
 
@@ -152,6 +170,7 @@ class PostsController extends Controller
         // Create post
         $post = Post::find($id);
         $post->title = $request->input('title');
+        $post->description = $request->input('description');
         $post->body = $request->input('body');
         if ($request->hasFile('cover_image')){
             $post->cover_image = $filenameToStore;
@@ -183,6 +202,6 @@ class PostsController extends Controller
         }
 
         $post->delete();
-        return redirect('/posts')->with('success', 'Post Removed');
+        return redirect('/dashboard')->with('success', 'Post Removed');
     }
 }

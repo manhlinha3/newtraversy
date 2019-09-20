@@ -33,9 +33,16 @@ Route::get('/services', 'PagesController@services');
 //     Route::resource('posts', 'PostsController');
 // });
 
-Route::resource('posts', 'PostsController');
+Route::resource('posts', 'PostsController', [
+    'except' => [
+        'show'
+    ]
+]);
+Route::get('posts/{url}', 'PostsController@show');
+
 Route::resource('categories', 'CategoriesController');
 
 Auth::routes();
 
 Route::get('/dashboard', 'DashboardController@index');
+Route::get('/slug', 'SlugController@index');
