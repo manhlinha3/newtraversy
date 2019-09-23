@@ -97,7 +97,7 @@ class PostsController extends Controller
         $post->cover_image = $filenameToStore;
         $post->save();
 
-        $post->url = $slug.'-'.$post->id;
+        $post->url = $slug.'.'.$post->id;
         $post->save();
 
         // Redirect

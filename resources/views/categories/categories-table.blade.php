@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-{{-- <div class="container">
+<div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -15,6 +15,7 @@
                                     <td data-column="name">{{$category->name}}</td>
                                 </tr>
                                 @if(count($category->subcategory))
+                                    {{-- <span>-</span> --}}
                                     @include('categories.subCategoryView',['subcategories' => $category->subcategory, 'dataParent' => $category->id , 'dataLevel' => 1])
                                 @endif      
 				            @endforeach
@@ -25,6 +26,6 @@
             </div>
         </div>
     </div>
-</div> --}}
-<h1>Hello Category</h1>
+</div>
+{{-- <h1>Hello Category</h1> --}}
 @endsection

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Category;
 
 class CategoriesController extends Controller
 {
@@ -13,7 +14,11 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        //
+        $parentCategories = Category::where('parent_id',NULL)->get();
+        // $parentCategories = Category::where('parent_id',NULL)->get();
+        // return view('categories.categories-table', compact('parentCategories'));
+        // return view('categories.categories-table.blade.php');
+        return view('categories.categories-table', compact('parentCategories'));
     }
 
     /**
